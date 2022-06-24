@@ -375,7 +375,7 @@ void operator ++ (int) {
     // code
 }
 ```
->`Parantezin icersindeki `int` degerine bakin. Bu unary operatorleri postfix olarak kullanmak icin kullanilan syntaxtir, fonksiyon degil.` 
+>`Parantezin icersindeki int degerine bakin. Bu unary operatorleri postfix olarak kullanmak icin kullanilan syntaxtir, fonksiyon degil.` 
 
 ## Prefix ve Postfix operator ornegi
 ```cpp
