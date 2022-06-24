@@ -295,7 +295,7 @@ int main() {
 ```
 
 ## Operator Overloading
-> `Bu kod blogumuzda Sinif clasında yer alan operator alanına göz atarsak, yine aynı class'ta yer alan birinci parametreye gönderme yapılmış. Yani gelen 2 değer x ve y'ye atanmış ve geri döndürülmüş. Bu da demek oluyor ki operator - olarak belirlediğimiz alan bize eksi verileri döndürecek. O zaman main alanına gelerek M ve S adında iki tane sınıf oluşturuyoruz ve M sınıfımızın x ve y değerlerini constructor yardımı ile sırasıyla 10 ve 20 yapıyoruz. Fakat S sınıfına geldiğimizde -M sınıfını gönderiyoruz. Bu durumda operator - işleme giriyor ve sonucunda bize eksili olarak x ve y değerlerini S sınıfına atamış oluyor.` 
+> Bu kod blogumuzda Sinif clasında yer alan operator alanına göz atarsak, yine aynı class'ta yer alan birinci parametreye gönderme yapılmış. Yani gelen 2 değer x ve y'ye atanmış ve geri döndürülmüş. Bu da demek oluyor ki operator - olarak belirlediğimiz alan bize eksi verileri döndürecek. O zaman main alanına gelerek M ve S adında iki tane sınıf oluşturuyoruz ve M sınıfımızın x ve y değerlerini constructor yardımı ile sırasıyla 10 ve 20 yapıyoruz. Fakat S sınıfına geldiğimizde -M sınıfını gönderiyoruz. Bu durumda operator - işleme giriyor ve sonucunda bize eksili olarak x ve y değerlerini S sınıfına atamış oluyor.
 
 
 ```cpp
@@ -368,14 +368,14 @@ int main() {
 ```
 
 ## Prefix - Postfix
-> `Onceki ornekler operatorumuz prefix olarak kullanildiginda calismakta. Operatoru postfix yapmak istiyorsak alttaki syntaxi kullanmaliyiz.`
+> Onceki ornekler operatorumuz prefix olarak kullanildiginda calismakta. Operatoru postfix yapmak istiyorsak alttaki syntaxi kullanmaliyiz.
 
 ```cpp
 void operator ++ (int) {
     // code
 }
 ```
->`Parantezin icersindeki int degerine bakin. Bu unary operatorleri postfix olarak kullanmak icin kullanilan syntaxtir, fonksiyon degil.` 
+> Parantezin icersindeki int degerine bakin. Bu unary operatorleri postfix olarak kullanmak icin kullanilan syntaxtir, fonksiyon degil.
 
 ## Prefix ve Postfix operator ornegi
 ```cpp
@@ -428,14 +428,14 @@ Count: 6
 Count: 7
 ```
 ## Bilgi
-> `Yukaridaki ornek hem postfix hem de prefix olarak calismakta, fakat asagidaki gibi bir sey denersek;`
+> Yukaridaki ornek hem postfix hem de prefix olarak calismakta, fakat asagidaki gibi bir sey denersek;
 ```cpp
 Count count1, result;
 
 // Error
 result = ++count1;
 ```
-> `Hata verecektir. Bunun nedeni fonksiyonumuzun return tipi void'dir. Bu problemi fonksiyonun return tipini Count olarak degistirerek cozebiliriz.`
+> Hata verecektir. Bunun nedeni fonksiyonumuzun return tipi void'dir. Bu problemi fonksiyonun return tipini Count olarak degistirerek cozebiliriz.
 
 ## Return Degiskenli Operator fonksiyonu
 ```cpp
