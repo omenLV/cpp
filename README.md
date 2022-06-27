@@ -114,6 +114,7 @@ char str[4] = {'C','+','+','\0'};
 ## Kullanicidan girilen tum satiri okuma ve yazdirma
 ```cpp
 cin.get(str, 100);
+
 ```
 > Ilk arguman string degiskeninin adi, ikincisi ise arrayin maksimum boyutu.
 
@@ -295,7 +296,7 @@ int main() {
 ```
 
 ## Operator Overloading
-> Bu kod blogumuzda Sinif clasında yer alan operator alanına göz atarsak, yine aynı class'ta yer alan birinci parametreye gönderme yapılmış. Yani gelen 2 değer x ve y'ye atanmış ve geri döndürülmüş. Bu da demek oluyor ki operator - olarak belirlediğimiz alan bize eksi verileri döndürecek. O zaman main alanına gelerek M ve S adında iki tane sınıf oluşturuyoruz ve M sınıfımızın x ve y değerlerini constructor yardımı ile sırasıyla 10 ve 20 yapıyoruz. Fakat S sınıfına geldiğimizde -M sınıfını gönderiyoruz. Bu durumda operator - işleme giriyor ve sonucunda bize eksili olarak x ve y değerlerini S sınıfına atamış oluyor.
+> `Bu kod blogumuzda Sinif clasında yer alan operator alanına göz atarsak, yine aynı class'ta yer alan birinci parametreye gönderme yapılmış. Yani gelen 2 değer x ve y'ye atanmış ve geri döndürülmüş. Bu da demek oluyor ki operator - olarak belirlediğimiz alan bize eksi verileri döndürecek. O zaman main alanına gelerek M ve S adında iki tane sınıf oluşturuyoruz ve M sınıfımızın x ve y değerlerini constructor yardımı ile sırasıyla 10 ve 20 yapıyoruz. Fakat S sınıfına geldiğimizde -M sınıfını gönderiyoruz. Bu durumda operator - işleme giriyor ve sonucunda bize eksili olarak x ve y değerlerini S sınıfına atamış oluyor.` 
 
 
 ```cpp
@@ -368,14 +369,14 @@ int main() {
 ```
 
 ## Prefix - Postfix
-> Onceki ornekler operatorumuz prefix olarak kullanildiginda calismakta. Operatoru postfix yapmak istiyorsak alttaki syntaxi kullanmaliyiz.
+> `Onceki ornekler operatorumuz prefix olarak kullanildiginda calismakta. Operatoru postfix yapmak istiyorsak alttaki syntaxi kullanmaliyiz.`
 
 ```cpp
 void operator ++ (int) {
     // code
 }
 ```
-> Parantezin icersindeki int degerine bakin. Bu unary operatorleri postfix olarak kullanmak icin kullanilan syntaxtir, fonksiyon degil.
+>`Parantezin icersindeki `int` degerine bakin. Bu unary operatorleri postfix olarak kullanmak icin kullanilan syntaxtir, fonksiyon degil.` 
 
 ## Prefix ve Postfix operator ornegi
 ```cpp
@@ -428,14 +429,14 @@ Count: 6
 Count: 7
 ```
 ## Bilgi
-> Yukaridaki ornek hem postfix hem de prefix olarak calismakta, fakat asagidaki gibi bir sey denersek;
+> `Yukaridaki ornek hem postfix hem de prefix olarak calismakta, fakat asagidaki gibi bir sey denersek;`
 ```cpp
 Count count1, result;
 
 // Error
 result = ++count1;
 ```
-> Hata verecektir. Bunun nedeni fonksiyonumuzun return tipi void'dir. Bu problemi fonksiyonun return tipini Count olarak degistirerek cozebiliriz.
+> `Hata verecektir. Bunun nedeni fonksiyonumuzun return tipi void'dir. Bu problemi fonksiyonun return tipini Count olarak degistirerek cozebiliriz.`
 
 ## Return Degiskenli Operator fonksiyonu
 ```cpp
@@ -525,5 +526,270 @@ int main(){
     sinif2.girdi();
     sonuc = sinif1 + sinif2;
     sonuc.cikti();
+}
+```
+
+## Pointer
+> Pointerlar, diger degiskenlerin bellekteki adreslerini tutan degiskenlerdir.
+> Eger programimizda `var` adinda bir degisken bulunuyorsa, `&var` bu degiskenin belleteki adresini bize verir.
+```cpp
+int main(){
+    int var = 5;
+    cout << "Memory address of `var` variable "<< &var << endl;
+    
+}
+```
+
+## Pointer Olusturmak
+```cpp
+int* pointVar; // preferred syntax
+```
+
+## Pointera adres atama
+```cpp
+int* pointVar, var;
+var = 5;
+
+// var degiskeninin adresi pointVar'a atandi
+pointVar = &var;
+```
+
+## Pointerlar tarafindan isaretlenen adresi degistirme
+```cpp
+int var = 5;
+int* pointVar;
+
+// assign address of var
+pointVar = &var;
+
+// change value at address pointVar
+*pointVar = 1;
+
+cout << var << endl; // Output: 1
+```
+
+## Pointerlar tarafindan isaretlenen adresi degistirme 2#
+```cpp
+int main() {
+    int var = 5;
+    int* pointVar;
+
+    // store address of var
+    pointVar = &var;
+
+    // print var
+    cout << "var = " << var << endl;
+
+    // print *pointVar
+    cout << "*pointVar = " << *pointVar << endl
+         << endl;
+
+    cout << "Changing value of var to 7:" << endl;
+
+    // change value of var to 7
+    var = 7;
+
+    // print var
+    cout << "var = " << var << endl;
+
+    // print *pointVar
+    cout << "*pointVar = " << *pointVar << endl
+         << endl;
+
+    cout << "Changing value of *pointVar to 16:" << endl;
+
+    // change value of var to 16
+    *pointVar = 16;
+
+    // print var
+    cout << "var = " << var << endl;
+
+    // print *pointVar
+    cout << "*pointVar = " << *pointVar << endl;
+    return 0;
+}
+```
+
+## Pointerlar ve Arrayler
+```cpp
+int *ptr;
+int arr[5];
+
+// store the address of the first
+// element of arr in ptr
+ptr = arr;
+```
+> Ya da...
+
+```cpp
+int *ptr;
+int arr[5];
+ptr = &arr[0];
+```
+
+## Her bir Array degerini Isaretleme
+```cpp
+int *ptr;
+int arr[5];
+ptr = arr;
+
+ptr + 1 is equivalent to &arr[1];
+ptr + 2 is equivalent to &arr[2];
+ptr + 3 is equivalent to &arr[3];
+ptr + 4 is equivalent to &arr[4];
+```
+> Ya da;
+```cpp
+*ptr == arr[0];
+*(ptr + 1) is equivalent to arr[1];
+*(ptr + 2) is equivalent to arr[2];
+*(ptr + 3) is equivalent to arr[3];
+*(ptr + 4) is equivalent to arr[4];
+```
+
+## Pointer & Array Ornek
+```cpp
+int main()
+{
+    float arr[3];
+
+    // pointer degiskeni tanimlama
+    float *ptr;
+    
+    cout << "Array kullanarak elementlerin bellek adresleri: " << endl;
+
+    // array elementlerinin adresinlerini yazdiran for dongusu
+    for (int i = 0; i < 3; ++i)
+    {
+        cout << "&arr[" << i << "] = " << &arr[i] << endl;
+    }
+
+    // ptr = &arr[0]
+    ptr = arr;
+
+    cout<<"\nPointer kullanarak array adresi: "<< endl;
+
+    for (int i = 0; i < 3; ++i)
+    {
+        cout << "ptr + " << i << " = "<< ptr + i << endl;
+    }
+
+    return 0;
+}
+```
+## Array ismini Pointer olarak kullanma
+> Array degiskeninin ismi, o dizinin ilk elementini isaret eder. Yani bir diziyi isaretci gibi davrandirtabiliriz.
+```cpp
+int main() {
+    float arr[5];
+    
+   // Insert data using pointer notation
+    cout << "Enter 5 numbers: ";
+    for (int i = 0; i < 5; ++i) {
+
+        // store input number in arr[i]
+        cin >> *(arr + i) ;
+
+    }
+
+    // Display data using pointer notation
+    cout << "Displaying data: " << endl;
+    for (int i = 0; i < 5; ++i) {
+
+        // display value of arr[i]
+        cout << *(arr + i) << endl ;
+
+    }
+
+    return 0;
+}
+```
+
+## Fonksiyona Pointer ile arguman gonderme
+```cpp
+
+void func1(int numVal) {
+    // code
+}
+
+
+// & ile parametre aliyor
+void func2(int &numRef) {
+    // code
+}
+
+int main() {
+    int num = 5;
+
+    // deger ile arguman
+    func1(num);
+
+    // pointer ile referans vererek arguman
+    func2(num);
+
+    return 0;
+}
+```
+
+## Pointersiz Fonksiyona Referans Gonderme
+```cpp
+// function definition to swap values
+void swap(int &n1, int &n2) {
+    int temp;
+    temp = n1;
+    n1 = n2;
+    n2 = temp;
+}
+
+int main()
+{
+
+    // initialize variables
+    int a = 1, b = 2;
+
+    cout << "Before swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+
+    // call function to swap numbers
+    swap(a, b);
+
+    cout << "\nAfter swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+
+    return 0;
+}
+```
+
+## Pointer Kullanarak Referans Gonderme
+```cpp
+void swap(int*, int*);
+
+int main()
+{
+
+    // initialize variables
+    int a = 1, b = 2;
+
+    cout << "Before swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+
+    // call function by passing variable addresses
+    swap(&a, &b);
+
+    cout << "\nAfter swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+    return 0;
+}
+
+// function definition to swap numbers
+void swap(int* n1, int* n2) {
+    int temp;
+    temp = *n1;
+    *n1 = *n2;
+    *n2 = temp;
 }
 ```
