@@ -793,3 +793,291 @@ void swap(int* n1, int* n2) {
     *n2 = temp;
 }
 ```
+
+## Bellek Yonetimi
+### New Operatoru
+```cpp
+// declare an int pointer
+int* pointVar;
+
+// dynamically allocate memory
+// using the new keyword 
+pointVar = new int;
+
+// assign value to allocated memory
+*pointVar = 45;
+```
+> Bu kod blogunda, bir integer degiskeni icin `new` kullanarak dinamik olarak bellek ayirdik. Bunun icin bir pointer kullandik, bunun nedeni `new` operatoru bize bellek konumunun adresini dondurur.
+
+> Bir `Array` olmasi durumunda, `new` operatoru Array'in ilk elementinin adresini dondurur.
+
+> New Operatoru icin Syntax;
+```cpp
+pointerVariable = new dataType;
+```
+
+### Delete Operatoru
+> Dinamik olarak bellek uzerinden ayirdigimiz bir degiskeni kullanmamiza daha fazla ihtiyacimizin olmadigi durumlarda degisken ile kullanilan bellegi serbest birakabiliriz. Bunun icin, `delete` operatoru kullanilir. Bu operator, bellegi isletim sistemine geri gonderir.
+
+> Ayni zamanda bu, `memory deallocation` olarak bilinir.
+> Syntax'i;
+```cpp
+delete pointerVariable;
+```
+> Ornek kod;
+```cpp
+// pointer tanimi
+int* pointVar;
+
+// tam sayi degiskeni icin dinamik olarak bellek tahsili
+pointVar = new int;
+
+// degisken bellege deger atama
+*pointVar = 45;
+
+// bellekte saklanan degeri dondurme
+cout << *pointVar; // Output: 45
+
+// tahsil edilmis bellegi serbest birakma
+delete pointVar;
+```
+
+## Array'ler icin New ve Delete
+```cpp
+int main(){  
+  int num;
+  cout << "Enter total number of students: ";
+  cin >> num;
+  float* ptr;
+    
+  // memory allocation of num number of floats
+  ptr = new float[num];
+
+  cout << "Enter GPA of students." << endl;
+  for (int i = 0; i < num; ++i) {
+    cout << "Student" << i + 1 << ": ";
+    cin >> *(ptr + i);
+  }
+
+  cout << "\nDisplaying GPA of students." << endl;
+  for (int i = 0; i < num; ++i) {
+    cout << "Student" << i + 1 << ": " << *(ptr + i) << endl;
+  }
+
+  // ptr memory is released
+  delete[] ptr;
+
+  return 0;
+}
+```
+
+## Objeler ile New ve Delete operatorleri
+```cpp
+
+class Student {
+  private:
+    int age;
+
+  public:
+
+    // constructor initializes age to 12
+    Student() : age(12) {}
+
+    void getAge() {
+      cout << "Age = " << age << endl;
+    }
+};
+
+int main() {
+
+  // dynamically declare Student object
+  Student* ptr = new Student();
+
+  // call getAge() function
+  ptr->getAge();
+
+  // ptr memory is released
+  delete ptr;
+
+  return 0;
+}
+```
+
+## Inheritance
+> Inheritance, bir class tarafindan (base class) turemis bir class (derived class) olusturmamizi saglar.
+```cpp
+class Animal {
+    // eat() function
+    // sleep() function
+};
+
+class Dog : public Animal {
+    // bark() function
+};
+```
+
+## is-a relationship | IS-A
+> Inheritance bir IS-A'dir. Inheritance sadece iki sinif arasinda bir iliski varsa kullanilir, ornegin;
++ Araba bir aractir..
++ Portakal bir meyvedir.
++ Cerrah bir doktordur.
++ Kopek bir hayvandir.
+
+> Ornek kod;
+```cpp
+class Animal {
+
+   public:
+    void eat() {
+        cout << "I can eat!" << endl;
+    }
+
+    void sleep() {
+        cout << "I can sleep!" << endl;
+    }
+};
+
+// derived class
+class Dog : public Animal {
+ 
+   public:
+    void bark() {
+        cout << "I can bark! Woof woof!!" << endl;
+    }
+};
+
+int main() {
+    // Create object of the Dog class
+    Dog dog1;
+
+    // Calling members of the base class
+    dog1.eat();
+    dog1.sleep();
+
+    // Calling member of the derived class
+    dog1.bark();
+
+    return 0;
+}
+```
+
+## Protected Members
+> Protected, ayni Private gibi sadece class'in icindeki uyeler tarafindan erisilebilen bir access modifier'dir. Ancak Private'in aksine, protected turemis (derived) siniflar tarafindan da kullanilabilir. Fakat private'da bu soz konusu degildir.
+
+## Access Modifier Ornek
+```cpp
+class Animal {
+    // code
+};
+
+class Dog : private Animal { // private
+    // code
+};
+
+class Cat : protected Animal { // protected
+    // code
+};
+```
+> Buradaki kodda, birkac ozellik bulunmakta
+
++ Eger bir derived class `public` olarak tanimlanirsa, base class'in uyeleri derived class uyeleri tarafindan kullanilabilir.
+
++ Eger bir derived class `private` olarak tanimlanirsa, base class'in tum uyeleri derived class icin private, yani erisilemez olur.
+
++ Eger bir derived class `protected` olarak tanimlanirsa, base class'in tum uyeleri derived icin protected olur.
+
++ Dipnot; Bir base class'in tum `private` uyeleri derived class icin `private`'dir.
+
+## Function Overriding
+> Derived class'ta ve Base class'ta ayni isme ve argumanlara sahip iki tane fonksiyon olusturulur ve cagirilirsa Base class'taki fonkisiyon `override` edilir ve Derived class'taki fonksiyon calistirilir. 
+
+```cpp
+class Base {
+   public:
+    void print() {
+        cout << "Base Function" << endl;
+    }
+};
+
+class Derived : public Base {
+   public:
+    void print() {
+        cout << "Derived Function" << endl;
+    }
+};
+
+int main() {
+    Derived derived1;
+    derived1.print();
+    return 0;
+}
+```
+
+```
+Output: Derived Function
+```
+
+> Eger bu sekilde obje olusturulursa;
+```cpp
+// Call function of Base class
+Base base1;
+base1.print(); // Output: Base Function
+```
+> Fonksiyon override edilmez.
+
+## Override edilmis Base fonksiyonun erisme
+```cpp
+class Base {
+   public:
+    void print() {
+        cout << "Base Function" << endl;
+    }
+};
+
+class Derived : public Base {
+   public:
+    void print() {
+        cout << "Derived Function" << endl;
+    }
+};
+
+int main() {
+    Derived derived1, derived2;
+    derived1.print();
+
+    // access print() function of the Base class
+    derived2.Base::print();
+
+    return 0;
+}
+```
+
+```cpp
+derived2.Base::print();
+```
+
+## Derived Class uzerinden Override edilmis fonksiyonu cagirma
+```cpp
+class Base {
+   public:
+    void print() {
+        cout << "Base Function" << endl;
+    }
+};
+
+class Derived : public Base {
+   public:
+    void print() {
+        cout << "Derived Function" << endl;
+
+        // call overridden function
+        Base::print();
+    }
+};
+
+int main() {
+    Derived derived1;
+    derived1.print();
+    return 0;
+}
+```
