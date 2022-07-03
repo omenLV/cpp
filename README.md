@@ -1081,3 +1081,274 @@ int main() {
     return 0;
 }
 ```
+
+## Override edilmis fonksiyonu Pointer ile cagirma
+```cpp
+
+class Base {
+   public:
+    void print() {
+        cout << "Base Function" << endl;
+    }
+};
+
+class Derived : public Base {
+   public:
+    void print() {
+        cout << "Derived Function" << endl;
+    }
+};
+
+int main() {
+    Derived derived1;
+
+    // pointer of Base type that points to derived1
+    Base* ptr = &derived1;
+
+    // call function of Base class using ptr
+    ptr->print();
+
+    return 0;
+}
+```
+
+> Bu kod blogunda Base tipi `ptr` adinda bir pointer olusturduk. Bu pointer, Derived objesi olan `derived1`'i isaretler. Bu yuzden eger `ptr` Derived objesine isaretli olsa bile, aslinda `Base` tipidir. Yani Base'in member fonksiyonunu cagirir.
+
+## Multilevel Inheritance
+```cpp
+class A { 
+... .. ... 
+};
+class B: public A {
+... .. ...
+};
+class C: public B {
+... ... ...
+};
+```
+
+> Ornek kod;
+```cpp
+class A {
+    public:
+      void display() {
+          cout<<"Base class content.";
+      }
+};
+
+class B : public A {};
+
+class C : public B {};
+
+int main() {
+    C obj;
+    obj.display();
+    return 0;
+}
+```
+
+
+## Multiple Inheritance
+> C++'da bir class birden fazla parent classtan derived edilmis olabilir. Ornegin, `Yarasa` adindaki bir class, base class olan `Memeli` ve `Kanatli` siniflarindan Derived edilmis olabilir. Bu mantikli bir davranis olur, cunku yarasa hem kanatli hem de memeli bir hayvandir.
+
+```cpp
+class Mammal {
+  public:
+    Mammal() {
+      cout << "Mammals can give direct birth." << endl;
+    }
+};
+
+class WingedAnimal {
+  public:
+    WingedAnimal() {
+      cout << "Winged animal can flap." << endl;
+    }
+};
+
+class Bat: public Mammal, public WingedAnimal {};
+
+int main() {
+    Bat b1;
+    return 0;
+}
+```
+
+## Multiple Inheritance Belirsizligi
+
+> Multiple Inheritance'daki acik ara sorun, function onverriding'tir. Ornegin, iki base class dervired class icinde override edilemeyen iki adet ayni fonksiyona sahip. Eger bunu cagirmaya calisirsak, derleyici hta verir. Cunku derleyici hangi fonksiyonu calistiracagini bilemez. 
+
+```cpp
+class base1 {
+  public:
+      void someFunction( ) {....}  
+};
+class base2 {
+    void someFunction( ) {....} 
+};
+class derived : public base1, public base2 {};
+
+int main() {
+    derived obj;
+    obj.someFunction() // Error!  
+}
+```
+
+> Bunu cozmek icin;
+```cpp
+int main() {
+    obj.base1::someFunction( );  // Function of base1 class is called
+    obj.base2::someFunction();   // Function of base2 class is called.
+}
+```
+
+## Hierarchical Inheritance
+
+> Eger birden fazla class base classtan turemis ise, bu hiyerarsik inheritance olarak adlandirilir. 
+
++ Ornegin, Fizik, Kimya, Biyoloji = Fen
++ Benzer olarak, Kopek, kedi, at ise hayvan class'indan turemis siniflardir.
+
+> Syntax
+```cpp
+class base_class {
+     ... .. ...
+}
+
+class first_derived_class: public base_class {
+     ... .. ...
+}
+
+class second_derived_class: public base_class {
+     ... .. ...
+}
+
+class third_derived_class: public base_class {
+     ... .. ...
+}
+```
+
+## Friend Function
+> Friend function, bir class'in protected ve private verilerine erisebilir. Tanimlama syntaxi;
+```cpp
+class className {
+    ... .. ...
+    friend returnType functionName(arguments);
+    ... .. ...
+}
+```
+
+> Ornek kod;
+```cpp
+class ClassB;
+
+class ClassA {
+    
+    public:
+        // constructor to initialize numA to 12
+        ClassA() : numA(12) {}
+        
+    private:
+        int numA;
+        
+         // friend function declaration
+         friend int add(ClassA, ClassB);
+};
+
+class ClassB {
+
+    public:
+        // constructor to initialize numB to 1
+        ClassB() : numB(1) {}
+    
+    private:
+        int numB;
+ 
+        // friend function declaration
+        friend int add(ClassA, ClassB);
+};
+
+// access members of both classes
+int add(ClassA objectA, ClassB objectB) {
+    return (objectA.numA + objectB.numB);
+}
+
+int main() {
+    ClassA objectA;
+    ClassB objectB;
+    cout << "Sum: " << add(objectA, objectB);
+    return 0;
+}
+```
+
+> Bu programda ClassA ve ClassB `add()` fonksiyonunu friend function olarak tanimladi. Yani, bu fonksiyon iki sinifinda private verilerine erisebilir.
+
+> Hatirlanmasi gereken bir sey de, ClassA icindeki friend function ClassB'yi kullaniyor.
+
+> Bu noktada, ClassB tanimlanmamis.
+
+```cpp
+// inside classA 
+friend int add(ClassA, ClassB);
+```
+
+> Bunun calismasi icin, ClassB'nin forward declaration'ina ihtiyacimiz var. 
+```cpp
+// forward declaration
+class ClassB;
+```
+
+## Friend Class
+```cpp
+class ClassB;
+
+class ClassA {
+   // ClassB is a friend class of ClassA
+   friend class ClassB;
+   ... .. ...
+}
+
+class ClassB {
+   ... .. ...
+}
+```
+> ClassB, ClassA'nin friend class'i. ClassA'nin tum uyelerine erisim saglayabilir. Fakat ClassA icerisinden ClassB'nin uyelerine erisemeyiz.
+
++ Ornek kod;
+```cpp
+class ClassB;
+
+class ClassA {
+    private:
+        int numA;
+
+        // friend class declaration
+        friend class ClassB;
+
+    public:
+        // constructor to initialize numA to 12
+        ClassA() : numA(12) {}
+};
+
+class ClassB {
+    private:
+        int numB;
+
+    public:
+        // constructor to initialize numB to 1
+        ClassB() : numB(1) {}
+    
+    // member function to add numA
+    // from ClassA and numB from ClassB
+    int add() {
+        ClassA objectA;
+        return objectA.numA + numB;
+    }
+};
+
+int main() {
+    ClassB objectB;
+    cout << "Sum: " << objectB.add();
+    return 0;
+}
+```
