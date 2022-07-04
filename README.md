@@ -1352,3 +1352,261 @@ int main() {
     return 0;
 }
 ```
+
+## Virtual Function
+
++ Virtual Function, derived class'in icerisinde yeniden tanimlamayi bekledigimiz bir base class member function'idir.
+
++ Basitce soylemek gerekirse, bir `virtual` fonksiyon base class'in icerisinde fonksiyonun `override` edilmis olmasini saglama almak icin kullanilir.
+
+```cpp
+class Base {
+   public:
+    virtual void print() {
+        // code
+    }
+};
+```
+
+## override identifier
++ override Identifier, derived class'in override edecegi base class uyelerini belirler.
+
+```cpp
+class Base {
+   public:
+    virtual void print() {
+        // code
+    }
+};
+
+class Derived : public Base {
+   public:
+    void print() override {
+        // code
+    }
+};
+```
+
++ Ornek kod;
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Coffee{
+    private:
+        string type;
+    
+    public:    
+        Coffee() : type("Coffee") {}
+        virtual string getType() {
+            return type;
+        }
+
+};
+
+class Filter : public Coffee{
+    private:
+        string type;
+
+    public:
+        Filter() : type("Filter") {}
+
+
+        string getType() override {
+            return type;
+        }
+
+};
+
+
+class Espresso : public Coffee {
+    private:
+        string type;
+
+    public:
+        Espresso() : type("Espresso") {}
+
+        string getType() override {
+            return type;
+        }
+
+};
+
+void print(Coffee* cof){
+    cout << "Coffee:" << cof->getType() << endl;
+}
+
+
+
+
+int main(){
+    Coffee* espresso = new Espresso();
+    Coffee* filter = new Filter();
+    print(espresso);
+    print(filter);
+
+
+
+}
+```
+
+## Class Template
+
++ Class Template'leri tek bir class ile farkli veri turleri ile calismak icin kullaniriz.
+
++ Tanimlama;
+```cpp
+template <class T>
+class className {
+  private:
+    T var;
+    ... .. ...
+  public:
+    T functionName(T arg);
+    ... .. ...
+};
+```
++ Bir `CT` template kelimesiyle baslar, `< >` isaretinin icerisine arguman yerlestirilir.
+
+## Class Template Objesi Tanimlama
++ Class Template tanimladiktan sonra, objesini asagidaki sekilde olustururuz.
+```cpp
+// className<dataType> classObject;
+className<int> classObject;
+className<float> classObject;
+className<string> classObject;
+```
+
++ Ornek kod;
+```cpp
+template <class T>
+class Number {
+   private:
+    T num;
+
+   public:
+    Number(T n) : num(n) {}   
+
+    T getNum() {
+        return num;
+    }
+};
+
+int main() {
+
+    Number<int> numberInt(7);
+
+    
+    Number<double> numberDouble(7.7);
+
+    cout << "int Number = " << numberInt.getNum() << endl;
+    cout << "double Number = " << numberDouble.getNum() << endl;
+
+    return 0;
+}
+```
+
+## Class Template'in disina Class Member tanimlama
+```cpp
+template <class T>
+class ClassName {
+    ... .. ...
+    
+    returnType functionName();
+};
+
+template <class T>
+returnType ClassName<T>::functionName() {
+    // code
+}
+```
+
+## Class Template ile basit bir hesap makinesi
+```cpp
+template <class T>
+class Calculator {
+   private:
+    T num1, num2;
+
+   public:
+    Calculator(T n1, T n2) {
+        num1 = n1;
+        num2 = n2;
+    }
+
+    void displayResult() {
+        cout << "Numbers: " << num1 << " and " << num2 << "." << endl;
+        cout << num1 << " + " << num2 << " = " << add() << endl;
+        cout << num1 << " - " << num2 << " = " << subtract() << endl;
+        cout << num1 << " * " << num2 << " = " << multiply() << endl;
+        cout << num1 << " / " << num2 << " = " << divide() << endl;
+    }
+
+    T add() { return num1 + num2; }
+    T subtract() { return num1 - num2; }
+    T multiply() { return num1 * num2; }
+    T divide() { return num1 / num2; }
+};
+
+int main() {
+    Calculator<int> intCalc(2, 1);
+    Calculator<float> floatCalc(2.4, 1.2);
+
+    cout << "Int results:" << endl;
+    intCalc.displayResult();
+
+    cout << endl
+         << "Float results:" << endl;
+    floatCalc.displayResult();
+
+    return 0;
+}
+```
+
+## Coklu Parametrelere Sahip Class Template
+```cpp
+template <class T, class U, class V = char>
+class ClassTemplate {
+   private:
+    T var1;
+    U var2;
+    V var3;
+
+   public:
+    ClassTemplate(T v1, U v2, V v3) : var1(v1), var2(v2), var3(v3) {}  // constructor
+
+    void printVar() {
+        cout << "var1 = " << var1 << endl;
+        cout << "var2 = " << var2 << endl;
+        cout << "var3 = " << var3 << endl;
+    }
+};
+
+int main() {
+    // create object with int, double and char types
+    ClassTemplate<int, double> obj1(7, 7.7, 'c');
+    cout << "obj1 values: " << endl;
+    obj1.printVar();
+
+    // create object with int, double and bool types
+    ClassTemplate<double, char, bool> obj2(8.8, 'a', false);
+    cout << "\nobj2 values: " << endl;
+    obj2.printVar();
+
+    return 0;
+}
+```
+
+```
+Output: 
+obj1 values: 
+var1 = 7
+var2 = 7.7
+var3 = c
+
+obj2 values: 
+var1 = 8.8
+var2 = a
+var3 = 0
+```
